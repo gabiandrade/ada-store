@@ -1,0 +1,75 @@
+{
+	"info": {
+		"_postman_id": "bf54198f-2ca4-4a51-b596-7490a46b661f",
+		"name": "ada-store",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "17184990"
+	},
+	"item": [
+		{
+			"name": "produto/criar-produto",
+			"request": {
+				"method": "POST",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"id\": 1,\r\n    \"nome\": \"Tenis\",\r\n    \"descricao\": \"tenis de corrida\",\r\n    \"preco\": 500.0,\r\n    \"quantidade\": 2\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/produto/criar-produto",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"produto",
+						"criar-produto"
+					]
+				}
+			},
+			"response": []
+		},
+		{
+			"name": "produto/todos",
+			"request": {
+				"method": "GET",
+				"header": []
+			},
+			"response": []
+		},
+		{
+			"name": "produto/atualizar-produto",
+			"request": {
+				"method": "PUT",
+				"header": [],
+				"body": {
+					"mode": "raw",
+					"raw": "{\r\n    \"nome\": \"Camisa do vasco\",\r\n    \"descricao\": \"time de sofredor\",\r\n    \"preco\": 400.0,\r\n    \"quantidade\": 9\r\n}",
+					"options": {
+						"raw": {
+							"language": "json"
+						}
+					}
+				},
+				"url": {
+					"raw": "localhost:8080/produto/atualizar-produto/3",
+					"host": [
+						"localhost"
+					],
+					"port": "8080",
+					"path": [
+						"produto",
+						"atualizar-produto",
+						"3"
+					]
+				}
+			},
+			"response": []
+		}
+	]
+}
