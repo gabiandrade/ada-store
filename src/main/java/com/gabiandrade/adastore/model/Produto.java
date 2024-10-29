@@ -1,21 +1,30 @@
 package com.gabiandrade.adastore.model;
 
-import lombok.AllArgsConstructor;
+import jakarta.persistence.*;
 import lombok.Getter;
-import lombok.NoArgsConstructor;
 import lombok.Setter;
 
 import java.math.BigDecimal;
 
-@Getter
 @Setter
-@NoArgsConstructor
-@AllArgsConstructor
+@Getter
+@Entity
+@Table(name = "PRODUTO")
 public class Produto {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
+
+    @Column(name = "NOME")
     private String nome;
+
+    @Column(name = "DESCRICAO")
     private String descricao;
+
+    @Column(name = "PRECO")
     private BigDecimal preco;
-    private Integer quantidade;
+
+    @Column(name = "QUANTIDADE")
+    private int quantidade;
 }

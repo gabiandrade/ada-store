@@ -1,8 +1,10 @@
 package com.gabiandrade.adastore.controller;
 
+import com.gabiandrade.adastore.dto.ProdutoListDTO;
 import com.gabiandrade.adastore.model.Produto;
 import com.gabiandrade.adastore.service.ProdutoService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -17,8 +19,9 @@ public class ProdutoController {
 
     /*localhost:8080/produto/criar-produto*/
     @PostMapping("/criar-produto")
-    public Produto criarProduto(@RequestBody Produto produto) {
-        return produtoService.salvarProduto(produto);
+    public ResponseEntity<List<Produto>> criarProduto(@RequestBody ProdutoListDTO produtoListDTO) {
+        List<Produto> novoProduto = produtoService.salvarProduto(produtoListDTO);
+        return new ResponseEntity<>(novoProduto, HttpStatus.CREATED);
     }
 
     @GetMapping("/todos")
@@ -41,8 +44,6 @@ public class ProdutoController {
         return ResponseEntity.ok().body(produtoAtualizado);
         //return produtoAtualizado != null ? ResponseEntity.ok().build() : ResponseEntity.notFound().build();//return ResponseEntity.ok().body(produtoAtualizado);
     }
-
-
 
 
 }

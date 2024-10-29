@@ -1,0 +1,2 @@
+INSERT INTO PRODUTO (nome, preco, descricao, quantidade) VALUES ('Tenis Feminino', 10.0, 'Tenis Feminino Corrida', 6);
+INSERT INTO PRODUTO (nome, preco, descricao, quantidade) VALUES ('Camisa do Vasco', 200.0, 'Camisa do dia 3 x 1 no Bahia', 5);
