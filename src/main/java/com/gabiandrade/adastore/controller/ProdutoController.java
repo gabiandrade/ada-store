@@ -1,8 +1,9 @@
 package com.gabiandrade.adastore.controller;
 
+import com.gabiandrade.adastore.dto.ProdutoDTO;
 import com.gabiandrade.adastore.dto.ProdutoListDTO;
-import com.gabiandrade.adastore.model.Produto;
 import com.gabiandrade.adastore.service.ProdutoService;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -17,33 +18,37 @@ public class ProdutoController {
     @Autowired
     private ProdutoService produtoService;
 
-    /*localhost:8080/produto/criar-produto*/
     @PostMapping("/criar-produto")
-    public ResponseEntity<List<Produto>> criarProduto(@RequestBody ProdutoListDTO produtoListDTO) {
-        List<Produto> novoProduto = produtoService.salvarProduto(produtoListDTO);
+    public ResponseEntity<List<ProdutoDTO>> criarProduto(@RequestBody ProdutoListDTO produtoListDTO) {
+        List<ProdutoDTO> novoProduto = produtoService.criarProduto(produtoListDTO);
         return new ResponseEntity<>(novoProduto, HttpStatus.CREATED);
     }
 
     @GetMapping("/todos")
-    public List<Produto> listarProduto() {
-        return produtoService.listarProdutos();
+    public ResponseEntity<List<ProdutoDTO>> listarProduto() {
+        return ResponseEntity.ok().body(produtoService.listarTodosProdutos());
     }
 
-    //localhost:8080/produto/atualizar-produto/5
+    @GetMapping("/{id}")
+    public ProdutoDTO buscarProdutoPorId(@PathVariable Long id) {
+        return produtoService.buscarProdutoPorId(id);
+    }
 
-    //ResponseEntity
-
-    // 200 - OK
-    // 201 - CREATE
-    // 400 - BAD REQUEST
-    // 404 - NOT FOUND
-    // 500 - SERVICO FORA
     @PutMapping("/atualizar-produto/{id}")
-    public ResponseEntity<Produto> atualizarProduto(@PathVariable Long id, @RequestBody Produto produto) {
-        Produto produtoAtualizado = produtoService.atualizarProduto(id, produto);
-        return ResponseEntity.ok().body(produtoAtualizado);
-        //return produtoAtualizado != null ? ResponseEntity.ok().build() : ResponseEntity.notFound().build();//return ResponseEntity.ok().body(produtoAtualizado);
+    public ResponseEntity<ProdutoDTO> atualizarProduto(@PathVariable Long id, @RequestBody ProdutoDTO produtoDTO) {
+        return ResponseEntity.ok().body(produtoService.atualizarProduto(id, produtoDTO));
     }
 
+
+    @DeleteMapping("/{id}")
+    public ResponseEntity<Void> deletarProduto(@PathVariable Long id) {
+        try {
+            produtoService.deletarProduto(id);
+            return ResponseEntity.noContent().build();  // HTTP 204: Sem conteúdo, deletado com sucesso
+        } catch (EntityNotFoundException e) {
+            // Caso o produto não seja encontrado, retorna erro 404 (Not Found)
+            return ResponseEntity.notFound().build();  // HTTP 404: Produto não encontrado
+        }
+    }
 
 }

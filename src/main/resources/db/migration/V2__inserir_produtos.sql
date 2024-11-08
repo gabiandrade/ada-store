@@ -1,2 +1,12 @@
 INSERT INTO PRODUTO (nome, preco, descricao, quantidade) VALUES ('Tenis Feminino', 10.0, 'Tenis Feminino Corrida', 6);
 INSERT INTO PRODUTO (nome, preco, descricao, quantidade) VALUES ('Camisa do Vasco', 200.0, 'Camisa do dia 3 x 1 no Bahia', 5);
+INSERT INTO PRODUTO (nome, preco, descricao, quantidade) VALUES ('Bola', 10.0, 'Bola de Basquete', 2);
+INSERT INTO PRODUTO (nome, preco, descricao, quantidade) VALUES ('Caderno do Vasco', 200.0, 'Caderno do Vasco', 5);
+INSERT INTO PRODUTO (nome, preco, descricao, quantidade) VALUES ('Notebook', 10.0, 'Notebook DELL 15"', 6);
+INSERT INTO PRODUTO (nome, preco, descricao, quantidade) VALUES ('TV', 200.0, 'Smart TV Samsung', 5);
+INSERT INTO PRODUTO (nome, preco, descricao, quantidade) VALUES ('Alexa', 10.0, 'Alexa 5ª geração', 6);
+INSERT INTO PRODUTO (nome, preco, descricao, quantidade) VALUES ('Geladeira', 200.0, 'Geladeira 2 portas 70L', 5);
+INSERT INTO PRODUTO (nome, preco, descricao, quantidade) VALUES ('Calça', 10.0, 'Calça addidas', 6);
+INSERT INTO PRODUTO (nome, preco, descricao, quantidade) VALUES ('Boné', 200.0, 'Boné nike', 5);
+INSERT INTO PRODUTO (nome, preco, descricao, quantidade) VALUES ('Fone de Ouvido', 200.0, 'Fone de ouvido JBL', 5);
+INSERT INTO PRODUTO (nome, preco, descricao, quantidade) VALUES ('Copo Stanley', 10.0, 'Copo Térmico Stanley', 6);

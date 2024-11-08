@@ -6,20 +6,20 @@ import lombok.Setter;
 
 import java.math.BigDecimal;
 
-@Setter
 @Getter
+@Setter
 @Entity
 @Table(name = "PRODUTO")
-public class Produto {
+public class ProdutoEntity {
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(name = "NOME")
+    @Column(name = "NOME", nullable = false, length = 15)
     private String nome;
 
-    @Column(name = "DESCRICAO")
+    @Column(name = "DESCRICAO", nullable = false)
     private String descricao;
 
     @Column(name = "PRECO")
@@ -27,4 +27,5 @@ public class Produto {
 
     @Column(name = "QUANTIDADE")
     private int quantidade;
+
 }

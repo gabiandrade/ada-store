@@ -1,16 +1,19 @@
 package com.gabiandrade.adastore.service;
 
+import com.gabiandrade.adastore.dto.ProdutoDTO;
 import com.gabiandrade.adastore.dto.ProdutoListDTO;
 import com.gabiandrade.adastore.mappers.ProdutoMapper;
-import com.gabiandrade.adastore.model.Produto;
+import com.gabiandrade.adastore.model.ProdutoEntity;
 import com.gabiandrade.adastore.repository.ProdutoRepository;
+import jakarta.persistence.EntityNotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 import org.springframework.web.server.ResponseStatusException;
 
-import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
+import java.util.stream.Collectors;
 
 @Service
 public class ProdutoService {
@@ -21,25 +24,50 @@ public class ProdutoService {
     @Autowired
     private ProdutoMapper produtoMapper;
 
-    private List<Produto> produtos = new ArrayList<>();
 
-    public List<Produto> listarProdutos() {
-        return produtos;
+    public List<ProdutoDTO> criarProduto(ProdutoListDTO produtoListDTO) {
+        List<ProdutoEntity> produtoEntities = produtoListDTO.getProdutoList().stream()
+                .map(produtoMapper::toEntity)
+                .collect(Collectors.toList());
+
+        List<ProdutoEntity> produtosSalvos = produtoRepository.saveAll(produtoEntities);
+
+        return produtosSalvos.stream()
+                .map(produtoMapper::toDTO)
+                .collect(Collectors.toList());
     }
 
-    public List<Produto> salvarProduto(ProdutoListDTO produtoListDTO) {
-        return produtoRepository.saveAll(produtoListDTO.getProdutoList());
+    public ProdutoDTO buscarProdutoPorId(Long id) {
+        ProdutoEntity produtoEntity = produtoRepository.findById(id).orElseThrow(() -> new ResponseStatusException(
+                HttpStatus.NOT_FOUND, "Produto com id" + id + "não encontrado"));
+        return produtoMapper.toDTO(produtoEntity);
     }
 
-    public Produto buscarProdutoPorId(Long id) {
-        return produtoRepository.findById(id)
-                .orElseThrow(() -> new ResponseStatusException(
-                        HttpStatus.NOT_FOUND, "Produto com id" + id + "não encontrado"));
+    public List<ProdutoDTO> listarTodosProdutos() {
+        List<ProdutoEntity> produtoEntities = produtoRepository.findAll();
+        return produtoEntities.stream().map(produtoMapper::toDTO).collect(Collectors.toList());
     }
 
-    public Produto atualizarProduto(Long id, Produto produtoAtualizado) {
-        Produto produtoExistente = buscarProdutoPorId(id);
-        produtoMapper.atualizarProduto(produtoAtualizado, produtoExistente);
-        return produtoRepository.save(produtoExistente);
+    public ProdutoDTO atualizarProduto(Long id, ProdutoDTO produtoDTO) {
+        Optional<ProdutoEntity> produtoEntity = produtoRepository.findById(id);
+        if (produtoEntity.isPresent()) {
+            ProdutoEntity produtoExistente = produtoEntity.get();
+            produtoMapper.atualizarProduto(produtoDTO, produtoExistente);
+            ProdutoEntity produtoSalvo = produtoRepository.save(produtoExistente);
+
+            return produtoMapper.toDTO(produtoSalvo);
+        } else {
+            throw new EntityNotFoundException("Produto não encontrado com id " + id);
+        }
     }
+
+
+    public void deletarProduto(Long id) {
+        ProdutoEntity produtoExistente = produtoRepository.findById(id)
+                .orElseThrow(() -> new EntityNotFoundException("Produto não encontrado com id " + id));
+
+        produtoRepository.delete(produtoExistente);
+    }
+
+
 }
