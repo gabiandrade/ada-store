@@ -2,8 +2,8 @@ package com.gabiandrade.adastore.dto;
 
 public enum UserRole {
 
-    ADMIN("ADMIN_ROLE"),
-    USER("USER_ROLE");
+    ADMIN("ADMIN"),
+    USER("USER");
 
     private String role;
 
